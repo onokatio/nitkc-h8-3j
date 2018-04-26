@@ -16,13 +16,20 @@ int main(void)
 
   while(1)
   {
-		P9DR = 0xff;  /* 出力データをセット */
+
+		P9DR = 0xff;
+		P9DR &= ~0x20;
 		sleep(1000);
-		P9DR &= ~0x10;  /* 出力データをセット */
+
+		P9DR = 0xff;
+		P9DR &= ~0x10;
 		sleep(1000);
-		P9DR &= ~0x20;  /* 出力データをセット */
+
+		P9DR = 0xff;
+		P9DR &= ~0x30;
 		sleep(1000);
-		P9DR &= 0x00;  /* 出力データをセット */
+
+		P9DR = 0xff;
 		sleep(1000);
   }
 }
