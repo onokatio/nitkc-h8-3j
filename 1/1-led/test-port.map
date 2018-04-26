@@ -1,0 +1,115 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+vectors          0x00ffe000         0x00000400
+ram              0x00200000         0x00020000
+
+Linker script and memory map
+
+LOAD /home/class/common/H8/lib/ramcrt-ext.o
+LOAD test-port.o
+LOAD /home/local/bin/../lib/gcc-lib/h8300-hms/3.3.6/h8300h/int32/libgcc.a
+LOAD /home/local/bin/../lib/gcc-lib/h8300-hms/3.3.6/../../../../h8300-hms/lib/h8300h/int32/libg.a
+LOAD /home/local/bin/../lib/gcc-lib/h8300-hms/3.3.6/../../../../h8300-hms/lib/h8300h/int32/libc.a
+LOAD /home/local/bin/../lib/gcc-lib/h8300-hms/3.3.6/h8300h/int32/libgcc.a
+                0x00ffff10                PROVIDE (_stack, 0xffff10)
+                0x00220000                PROVIDE (__ext_stack, 0x220000)
+
+.vectors        0x00ffe000      0x100
+                0x00ffe000        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe004        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe008        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe00c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe010        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe014        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe018        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe01c        0x4 LONG 0x200000 DEFINED (_int_nmi)?<code 340> (_int_nmi):<code 340> (_start)
+                0x00ffe020        0x4 LONG 0x200000 DEFINED (_int_trap0)?<code 340> (_int_trap0):<code 340> (_start)
+                0x00ffe024        0x4 LONG 0x200000 DEFINED (_int_trap1)?<code 340> (_int_trap1):<code 340> (_start)
+                0x00ffe028        0x4 LONG 0x200000 DEFINED (_int_trap2)?<code 340> (_int_trap2):<code 340> (_start)
+                0x00ffe02c        0x4 LONG 0x200000 DEFINED (_int_trap3)?<code 340> (_int_trap3):<code 340> (_start)
+                0x00ffe030        0x4 LONG 0x200000 DEFINED (_int_irq0)?<code 340> (_int_irq0):<code 340> (_start)
+                0x00ffe034        0x4 LONG 0x200000 DEFINED (_int_irq1)?<code 340> (_int_irq1):<code 340> (_start)
+                0x00ffe038        0x4 LONG 0x200000 DEFINED (_int_irq2)?<code 340> (_int_irq2):<code 340> (_start)
+                0x00ffe03c        0x4 LONG 0x200000 DEFINED (_int_irq3)?<code 340> (_int_irq3):<code 340> (_start)
+                0x00ffe040        0x4 LONG 0x200000 DEFINED (_int_irq4)?<code 340> (_int_irq4):<code 340> (_start)
+                0x00ffe044        0x4 LONG 0x200000 DEFINED (_int_irq5)?<code 340> (_int_irq5):<code 340> (_start)
+                0x00ffe048        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe04c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe050        0x4 LONG 0x200000 DEFINED (_int_wovi)?<code 340> (_int_wovi):<code 340> (_start)
+                0x00ffe054        0x4 LONG 0x200000 DEFINED (_int_cmi)?<code 340> (_int_cmi):<code 340> (_start)
+                0x00ffe058        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe05c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe060        0x4 LONG 0x200000 DEFINED (_int_imia0)?<code 340> (_int_imia0):<code 340> (_start)
+                0x00ffe064        0x4 LONG 0x200000 DEFINED (_int_imib0)?<code 340> (_int_imib0):<code 340> (_start)
+                0x00ffe068        0x4 LONG 0x200000 DEFINED (_int_ovi0)?<code 340> (_int_ovi0):<code 340> (_start)
+                0x00ffe06c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe070        0x4 LONG 0x200000 DEFINED (_int_imia1)?<code 340> (_int_imia1):<code 340> (_start)
+                0x00ffe074        0x4 LONG 0x200000 DEFINED (_int_imib1)?<code 340> (_int_imib1):<code 340> (_start)
+                0x00ffe078        0x4 LONG 0x200000 DEFINED (_int_ovi1)?<code 340> (_int_ovi1):<code 340> (_start)
+                0x00ffe07c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe080        0x4 LONG 0x200000 DEFINED (_int_imia2)?<code 340> (_int_imia2):<code 340> (_start)
+                0x00ffe084        0x4 LONG 0x200000 DEFINED (_int_imib2)?<code 340> (_int_imib2):<code 340> (_start)
+                0x00ffe088        0x4 LONG 0x200000 DEFINED (_int_ovi2)?<code 340> (_int_ovi2):<code 340> (_start)
+                0x00ffe08c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe090        0x4 LONG 0x200000 DEFINED (_int_imia3)?<code 340> (_int_imia3):<code 340> (_start)
+                0x00ffe094        0x4 LONG 0x200000 DEFINED (_int_imib3)?<code 340> (_int_imib3):<code 340> (_start)
+                0x00ffe098        0x4 LONG 0x200000 DEFINED (_int_ovi3)?<code 340> (_int_ovi3):<code 340> (_start)
+                0x00ffe09c        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0a0        0x4 LONG 0x200000 DEFINED (_int_imia4)?<code 340> (_int_imia4):<code 340> (_start)
+                0x00ffe0a4        0x4 LONG 0x200000 DEFINED (_int_imib4)?<code 340> (_int_imib4):<code 340> (_start)
+                0x00ffe0a8        0x4 LONG 0x200000 DEFINED (_int_ovi4)?<code 340> (_int_ovi4):<code 340> (_start)
+                0x00ffe0ac        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0b0        0x4 LONG 0x200000 DEFINED (_int_dend0a)?<code 340> (_int_dend0a):<code 340> (_start)
+                0x00ffe0b4        0x4 LONG 0x200000 DEFINED (_int_dend0b)?<code 340> (_int_dend0b):<code 340> (_start)
+                0x00ffe0b8        0x4 LONG 0x200000 DEFINED (_int_dend1a)?<code 340> (_int_dend1a):<code 340> (_start)
+                0x00ffe0bc        0x4 LONG 0x200000 DEFINED (_int_dend1b)?<code 340> (_int_dend1b):<code 340> (_start)
+                0x00ffe0c0        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0c4        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0c8        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0cc        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0d0        0x4 LONG 0x200000 DEFINED (_int_eri0)?<code 340> (_int_eri0):<code 340> (_start)
+                0x00ffe0d4        0x4 LONG 0x200000 DEFINED (_int_rxi0)?<code 340> (_int_rxi0):<code 340> (_start)
+                0x00ffe0d8        0x4 LONG 0x200000 DEFINED (_int_txi0)?<code 340> (_int_txi0):<code 340> (_start)
+                0x00ffe0dc        0x4 LONG 0x200000 DEFINED (_int_tei0)?<code 340> (_int_tei0):<code 340> (_start)
+                0x00ffe0e0        0x4 LONG 0x200000 DEFINED (_int_eri1)?<code 340> (_int_eri1):<code 340> (_start)
+                0x00ffe0e4        0x4 LONG 0x200000 DEFINED (_int_rxi1)?<code 340> (_int_rxi1):<code 340> (_start)
+                0x00ffe0e8        0x4 LONG 0x200000 DEFINED (_int_txi1)?<code 340> (_int_txi1):<code 340> (_start)
+                0x00ffe0ec        0x4 LONG 0x200000 DEFINED (_int_tei1)?<code 340> (_int_tei1):<code 340> (_start)
+                0x00ffe0f0        0x4 LONG 0x200000 DEFINED (_int_adi)?<code 340> (_int_adi):<code 340> (_start)
+                0x00ffe0f4        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0f8        0x4 LONG 0x200000 <code 340> (_start)
+                0x00ffe0fc        0x4 LONG 0x200000 <code 340> (_start)
+
+.text           0x00200000       0x54
+                0x00200000                __text_start = .
+ *(.text)
+ .text          0x00200000       0x3c /home/class/common/H8/lib/ramcrt-ext.o
+                                 0x70 (size before relaxing)
+                0x00200000                _start
+ .text          0x0020003c       0x18 test-port.o
+                0x0020003c                _main
+ *(.rodata)
+ *(.strings)
+                0x00200054                __text_end = .
+
+.tors           0x00200054        0x0
+                0x00200054                ___ctors = .
+ *(.ctors)
+                0x00200054                ___ctors_end = .
+                0x00200054                ___dtors = .
+ *(.dtors)
+                0x00200054                ___dtors_end = .
+
+.data           0x00200054        0x0
+                0x00200054                __data_start = .
+ *(.data)
+                0x00200054                __edata = .
+
+.bss            0x00200054        0x0
+                0x00200054                __bss_start = .
+ *(.bss)
+ *(COMMON)
+                0x00200054                __bss_end = .
+OUTPUT(test-port.coff coff-h8300)
