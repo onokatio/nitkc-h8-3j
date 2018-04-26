@@ -1,0 +1,4 @@
+*.o
+*.mot
+*.map
+*.coff
