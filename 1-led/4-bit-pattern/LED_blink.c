@@ -11,25 +11,27 @@ void sleep(int max){
 
 int main(void)
 {
+	char b4_old;
+	char b5_old;
+	char b4_new = 0;
+	char b5_new = 0;
+	char dout = 0;
   P9DDR = 0x30;  /* ポート9の初期化(P94--P95を出力に設定) */
+	P9DR = 0xff;
 
 
   while(1)
   {
 
-		P9DR = 0xff;
-		P9DR &= ~0x20;
-		sleep(1000);
+		b4_old = b4_new;
+		b5_old = b5_new;
 
-		P9DR = 0xff;
-		P9DR &= ~0x10;
-		sleep(1000);
+		b4_new = ~(b5_old ^ b4_old) & 0x01;
+		b5_new = (~b5_old)         & 0x01;
 
-		P9DR = 0xff;
-		P9DR &= ~0x30;
-		sleep(1000);
+		dout = b4_new << 4 | b5_new << 5;
+		P9DR = dout;
 
-		P9DR = 0xff;
 		sleep(1000);
   }
 }
