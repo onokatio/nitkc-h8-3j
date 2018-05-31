@@ -6,7 +6,7 @@ void sleep(int max){
 	int i,j,k,c;
 
 	for(c=0; c < max;c++)
-		for(i=0; i < MILLISEC ;i++);
+		for(i=0; i < MILLISEC ;i++); //ミリ秒分空ループする
 }
 
 int main(void)
@@ -17,12 +17,12 @@ int main(void)
   while(1)
   {
 		P9DR = 0x30;  /* 出力データをセット */
-		sleep(1000);
+		sleep(1000);  // 1秒スリープ
 		P9DR = 0x10;  /* 出力データをセット */
-		sleep(1000);
+		sleep(1000);  // 1秒スリープ
 		P9DR = 0x20;  /* 出力データをセット */
-		sleep(1000);
+		sleep(1000);  // 1秒スリープ
 		P9DR = 0x00;  /* 出力データをセット */
-		sleep(1000);
+		sleep(1000);  // 1秒スリープ
   }
 }
