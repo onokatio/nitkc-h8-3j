@@ -48,9 +48,11 @@ void scroll(int startx, int starty, int revert, char str[]){
 
 		clear();
 		if(revert){
-			print(WIDTH - x%WIDTH + startx, HEIGHT - y%HEIGHT + starty,str);
+			//print(WIDTH - x%WIDTH + startx, HEIGHT - y%HEIGHT + starty,str);
+			print(x,y,str);
 		}else{
-			print((startx + x)%WIDTH, (starty + y)%HEIGHT,str);
+			//print((startx + x)%WIDTH, (starty + y)%HEIGHT,str);
+			print(x,y,str);
 		}
 		sleep(1000);
 
@@ -61,6 +63,7 @@ void scroll(int startx, int starty, int revert, char str[]){
 		}
 
 		x++;
+		//x = abs(x);
 	}
 }
 
