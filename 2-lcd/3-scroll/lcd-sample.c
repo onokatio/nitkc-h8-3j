@@ -57,9 +57,9 @@ void scroll(int startx, int starty, int revert, char str[]){
 		sleep(1000);
 
 		if(revert){
-			if( WIDTH - (x-1)%WIDTH + startx == WIDTH - 1)	y++;
+			if( (startx - (x-1) )%WIDTH + startx == WIDTH - 1)	y++;
 		}else{
-			if( (startx + x+1)%WIDTH == 0)	y++;
+			if( (startx + x+1 )%WIDTH == 0)	y++;
 		}
 
 		x++;
