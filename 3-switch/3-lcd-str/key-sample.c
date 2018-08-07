@@ -1,5 +1,6 @@
 #include "h8-3052-iodef.h"
 #include "lcd.h"
+#include "stdio.h"
 
 int main(void)
 {
