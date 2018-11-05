@@ -25,6 +25,8 @@ int main(void)
   sec_time = 0;
   old_time = 0;
 
+  int force_print = 0;
+
   int h = 0;
   int m = 0;
   int s = 0;
@@ -105,36 +107,37 @@ int main(void)
     case 2 : keycode = 0; break;
     case 4 : keycode = 11; break;
     }
-		if(keycode == keycode_old){
-			weight[keycode]++;
-			lcd_cursor(0,1);
-			printnum(weight[1]);
-		}else{
+	if(keycode == keycode_old){
+		weight[keycode]++;
+		//lcd_cursor(0,1);
+		//printnum(weight[1]);
+	}else{
+		for(j = 0; j < 12; j++){
+			pushed[j] = 0;
+			weight[j] = 0;
+		}
+	}
+
+	for(i = 0; i < 12 ; i++){
+		if(pushed[i] == 0 && weight[i] > 500){
 			for(j = 0; j < 12; j++){
 				pushed[j] = 0;
 				weight[j] = 0;
 			}
+			pushed[i] = 1;
+			weight[i] = 0;
+			if(i == 1 && h < 24) h++;
+			if(i == 4 && h > 0) h--;
+			if(i == 2 && m < 60) m++;
+			if(i == 5 && m > 0) m--;
+			if(i == 3 && s < 60) s++;
+			if(i == 6 && s > 0) s--;
+			force_print = 1;
+		}else if(pushed[i] == 1 && weight[i] > 500){
+			weight[i] = 0;
+			pushed[i] = 0;
 		}
-
-		for(i = 0; i < 12 ; i++){
-			if(pushed[i] == 0 && weight[i] > 500){
-				for(j = 0; j < 12; j++){
-					pushed[j] = 0;
-					weight[j] = 0;
-				}
-				pushed[i] = 1;
-				weight[i] = 0;
-				if(i == 1) h++;
-				if(i == 4) h--;
-				if(i == 2) m++;
-				if(i == 5) m--;
-				if(i == 3) s++;
-				if(i == 6) s--;
-			}else if(pushed[i] == 1 && weight[i] > 500){
-				weight[i] = 0;
-				pushed[i] = 0;
-			}
-		}
+	}
 
 	if (old_time != sec_time){
 		s++;
@@ -154,6 +157,18 @@ int main(void)
 		lcd_printch(s / 10 + '0');
 		lcd_printch(s % 10 + '0');
 		old_time = sec_time;
+	}
+	if (force_print){
+		force_print = 0;
+  		lcd_cursor(0,0);
+		lcd_printch(h / 10 + '0');
+		lcd_printch(h % 10 + '0');
+		lcd_printch(':');
+		lcd_printch(m / 10 + '0');
+		lcd_printch(m % 10 + '0');
+		lcd_printch(':');
+		lcd_printch(s / 10 + '0');
+		lcd_printch(s % 10 + '0');
 	}
 
   }

@@ -9,7 +9,7 @@
 # 1. 生成するオブジェクトのファイル名を指定
 TARGET = blink1s.mot
 # 2. 生成に必要なCのファイル名を空白で区切って並べる
-SOURCE_C = blink1s.c timer.c lcd.c
+SOURCE_C = blink1s.c timer.c
 # 3. 生成に必要なアセンブラのファイル名を空白で区切って並べる
 #	(スタートアップルーチンは除く)
 SOURCE_ASM = 

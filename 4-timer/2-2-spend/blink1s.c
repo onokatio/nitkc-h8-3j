@@ -25,18 +25,46 @@ int main(void)
   sec_time = 0;
   old_time = 0;
 
+  int h = 23;
+  int m = 59;
+  int s = 55;
+
   timer_init();        /* タイマを使用前に初期化する */
   timer_set(0,INT1MS); /* タイマ0を1ms間隔で動作設定 */
   timer_start(0);      /* タイマ(チャネル0)スタート  */
 
   ENINT();             /* CPU割り込み許可 */
 
+	lcd_cursor(0,0);
+	lcd_printch(h / 10 + '0');
+	lcd_printch(h % 10 + '0');
+	lcd_printch(':');
+	lcd_printch(m / 10 + '0');
+	lcd_printch(m % 10 + '0');
+	lcd_printch(':');
+	lcd_printch(s / 10 + '0');
+	lcd_printch(s % 10 + '0');
+
   while (1) {
     /* 割り込み動作以外はこの無限ループを実行している */
 
 	if (old_time != sec_time){
+		s++;
+		if(s > 59) m += 1;
+			s %= 60;
+		if(m > 59) h += 1;
+			m %= 60;
+		if(h > 23) h = 0;
+
   		lcd_cursor(0,0);
-		printnum(sec_time);
+		lcd_printch(h / 10 + '0');
+		lcd_printch(h % 10 + '0');
+		lcd_printch(':');
+		lcd_printch(m / 10 + '0');
+		lcd_printch(m % 10 + '0');
+		lcd_printch(':');
+		lcd_printch(s / 10 + '0');
+		lcd_printch(s % 10 + '0');
 		old_time = sec_time;
 	}
 
