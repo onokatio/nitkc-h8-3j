@@ -27,9 +27,9 @@ int main(void)
   secD100_time = 0;
   oldD100_time = 0;
 
-  int h = 0;
-  int m = 0;
-  int s = 0;
+  int h = 23;
+  int m = 59;
+  int s = 55;
   int sD100 = 0;
 
   int run = 0;
@@ -96,6 +96,24 @@ int main(void)
 					run = 1;
 				}else if(i == 11){
 					run = 0;
+				}else if(i == 0){
+					run = 0;
+					sD100 = 0;
+					s = 0;
+					m = 0;
+					h = 0;
+					lcd_cursor(0,0);
+					lcd_printch(h / 10 + '0');
+					lcd_printch(h % 10 + '0');
+					lcd_printch(':');
+					lcd_printch(m / 10 + '0');
+					lcd_printch(m % 10 + '0');
+					lcd_printch(':');
+					lcd_printch(s / 10 + '0');
+					lcd_printch(s % 10 + '0');
+					lcd_printch('.');
+					lcd_printch(sD100 / 10 + '0');
+					lcd_printch(sD100 % 10 + '0');
 				}
 			}
 		}
@@ -108,7 +126,13 @@ int main(void)
 			s %= 60;
 		if(m > 59) h += 1;
 			m %= 60;
-		if(h > 23) run = 0;
+		if(h > 23){
+			run = 0;
+			h = 23;
+			m = 59;
+			s = 59;
+			sD100 = 99;
+		}
 
   		lcd_cursor(0,0);
 		lcd_printch(h / 10 + '0');
