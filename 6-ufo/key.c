@@ -43,7 +43,7 @@ void key_init(void)
     for (j = 0; j < KEYROWNUM; j++){
       /* ここで何もキーが押されていない状態にバッファ(keybufdp)を初期化 */
       /* キーが押されていないときにビットが1となることに注意すること */
-
+		keybuf[i][j] = 0x07;
     }
   }
 }
@@ -57,14 +57,29 @@ void key_sense(void)
   /* ここにバッファポインタ(keybufdp)の更新を書く */
   /* 　・バッファポインタが最新のスキャンデータを指すようにすること */
   /* 　・リングバッファのつなぎ目の処理を忘れないこと */
-
+	keybufdp++;
+	keybufdp %= KEYBUFSIZE;
   /* キースキャン */
   /* ここでキー列ごとにキースキャンしたデータをそのままキーバッファに格納する */
   /* キー列番号は、0:1〜3の列、1:4〜6の列、2:7〜9の列、3:*〜#の列 とする */
   /* 各キー列のキーデータは keybuf[バッファポインタ][キー列番号] に格納する */
   /* 　・PA0〜PA3だけを書き換えるように注意すること(他のビットの変化禁止) */
   /* 　・P60〜P62だけを読むように注意すること(他のビットは0にする) */
-
+    //key 1,2,3
+    PADR = 0x07; // PA3 = L
+	keybuf[keybufdp][0] = ~P6DR & 0x07;   // データ入力
+      
+    //key 4,5,6
+    PADR = 0x0b;
+	keybuf[keybufdp][1] = ~P6DR & 0x07;   // データ入力
+      
+    //key 7,8,9
+    PADR = 0x0d;
+	keybuf[keybufdp][2] = ~P6DR & 0x07;   // データ入力
+      
+    //key *,0,#
+    PADR = 0x0e;
+	keybuf[keybufdp][3] = ~P6DR & 0x07;   // データ入力
 }
 
 int key_check(int keynum)
@@ -76,6 +91,9 @@ int key_check(int keynum)
      /* チェック中の割り込みによるバッファ書き換え対策はバッファの大きさで対応 */
 {
   int r;
+  int i;
+  int count;
+  int tmp;
   /* 最初にキー番号の範囲をチェックする */
   if ((keynum < 1) || (keynum > KEYMAXNUM))
     r = KEYNONE; /* キー番号指定が正しくないときはKEYNONEを返す */
@@ -83,11 +101,24 @@ int key_check(int keynum)
     /* ここでキー番号からキー列番号とデータのビット位置を求める */
     /* キー列番号がわかると配列の参照ができる */
     /* データのビット位置がわかれば、指定されたキーのON/OFFがわかる */
-
     /* ここで宣言された長さ(KEYCHKCOUNT)分だけキーの状態を調べる */
     /* 　・リングバッファのつなぎ目の処理を忘れないこと */
     /* 　・途中でキースキャン割り込みが生じても矛盾しない処理を行うこと */
     /* 指定キーが全てONならKEYON、全てOFFならKEYOFF、それ以外はKEYTRANS とする*/
+	tmp =  keybufdp;
+
+	for(i= 0; i<KEYCHKCOUNT; i++){
+		if(tmp - i < 0) tmp = KEYBUFSIZE + i - 1;
+		if(keybuf[tmp - i][(keynum-1)/3] == 0x01<<((keynum-1)%3)) count++;
+	}
+
+	if(count == 5){
+		r = KEYON;
+	}else if(count == 0){
+		r = KEYOFF;
+	}else{
+		r = KEYTRANS;
+	}
 
   }
   return r;
