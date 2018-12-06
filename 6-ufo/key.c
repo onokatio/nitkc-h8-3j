@@ -1,4 +1,5 @@
 #include "h8-3052-iodef.h"
+#include "lcd.h"
 
 #define KEYBUFSIZE 10  /* キーバッファの大きさ */
 #define KEYCHKCOUNT 5  /* キーの連続状態を調べるバッファ上の長さ　 */
@@ -43,7 +44,7 @@ void key_init(void)
     for (j = 0; j < KEYROWNUM; j++){
       /* ここで何もキーが押されていない状態にバッファ(keybufdp)を初期化 */
       /* キーが押されていないときにビットが1となることに注意すること */
-		keybuf[i][j] = 0x07;
+		keybuf[i][j] = 0xff;
     }
   }
 }
@@ -66,20 +67,20 @@ void key_sense(void)
   /* 　・PA0〜PA3だけを書き換えるように注意すること(他のビットの変化禁止) */
   /* 　・P60〜P62だけを読むように注意すること(他のビットは0にする) */
     //key 1,2,3
-    PADR = 0x07; // PA3 = L
-	keybuf[keybufdp][0] = ~P6DR & 0x07;   // データ入力
+    //PADR = 0x07; // PA3 = L
+	//keybuf[keybufdp][0] = ~(~P6DR & 0x07);   // データ入力
       
     //key 4,5,6
-    PADR = 0x0b;
-	keybuf[keybufdp][1] = ~P6DR & 0x07;   // データ入力
+    //PADR = 0x0b;
+	//keybuf[keybufdp][1] = ~(~P6DR & 0x07);   // データ入力
       
     //key 7,8,9
-    PADR = 0x0d;
-	keybuf[keybufdp][2] = ~P6DR & 0x07;   // データ入力
+    //PADR = 0x0d;
+	//keybuf[keybufdp][2] = ~(~P6DR & 0x07);   // データ入力
       
     //key *,0,#
     PADR = 0x0e;
-	keybuf[keybufdp][3] = ~P6DR & 0x07;   // データ入力
+	keybuf[keybufdp][3] = ~(~P6DR & 0x07);   // データ入力
 }
 
 int key_check(int keynum)
@@ -92,7 +93,7 @@ int key_check(int keynum)
 {
   int r;
   int i;
-  int count;
+  int count = 0;
   int tmp;
   /* 最初にキー番号の範囲をチェックする */
   if ((keynum < 1) || (keynum > KEYMAXNUM))
@@ -107,10 +108,11 @@ int key_check(int keynum)
     /* 指定キーが全てONならKEYON、全てOFFならKEYOFF、それ以外はKEYTRANS とする*/
 	tmp =  keybufdp;
 
-	for(i= 0; i<KEYCHKCOUNT; i++){
-		if(tmp - i < 0) tmp = KEYBUFSIZE + i - 1;
-		if(keybuf[tmp - i][(keynum-1)/3] == 0x01<<((keynum-1)%3)) count++;
+	for(i = 0; i<KEYCHKCOUNT; i++){
+		if(~(keybuf[(tmp - i + KEYBUFSIZE)%KEYBUFSIZE][(keynum-1)/3]) & 0x01<<((keynum-1)%3)) count++;
 	}
+  	//lcd_cursor(15,0);                     /* LCD にメッセージ表示 */
+   	//lcd_printstr("0" + count);
 
 	if(count == 5){
 		r = KEYON;
