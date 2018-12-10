@@ -47,6 +47,7 @@ int main(void)
   P6DDR &= ~0x07;  /* P60,1,2   入力 */
   PADDR |= 0x0F;   /* PA0,1,2,3 出力 */
 
+
   while (1) {
     play_mode = NOSELECT;
     key_data = menu();                    /* メニューを選ぶ */
@@ -57,7 +58,7 @@ int main(void)
 
 
     /* キー入力されていれば録音/再生の関数を呼び出す処理を記述する */
-    if (key_data == '*' || key_data == '#') sample_replay(play_mode);
+    if (key_data == '*' || key_data == '#') sample_replay(PLAY);
 
   }
   return 1;
@@ -79,7 +80,7 @@ unsigned char  menu(void)
   cf = 0;
   key_data = 0;
 
-  while (cf == 0 ){  /* キー入力するまでループする */
+  //while (cf == 0 ){  /* キー入力するまでループする */
     /* ここにキー入力の処理を記述する */
     //key *,0,#
     PADR = 0x0E; 
@@ -90,7 +91,7 @@ unsigned char  menu(void)
     case 1 : key_data = '*'; break;
     case 4 : key_data = '#'; break;
     } 
-  }
+  //}
 
   /* 入力されたキーの情報を返す */
   return key_data;
@@ -131,7 +132,7 @@ void sample_replay(int mode)
 	if (peak <  databuf[i * 1024 + j]) peak = databuf[i * 1024 + j];
       }
       //pwm_databuf[i] = peak;
-      pwm_databuf[i] = 51;
+      pwm_databuf[i] = 51; //333333
     }
   }
 }
@@ -154,7 +155,8 @@ void int_imia0(void)
     force_play = 1;
     /* ここに再生のときの処理を記述する(以下のコメントを参照のこと) */
                                /* D/Aにデータを出力         */
-      if(bufptr % PWM_T < pwm_databuf[pwm_bufptr]){
+      //if(bufptr % PWM_T < pwm_databuf[pwm_bufptr]){
+      if(bufptr % PWM_T < 51){
 		  da_out(0,databuf[bufptr]);
 		  P9DR &= ~0x20;
 	  }else{
