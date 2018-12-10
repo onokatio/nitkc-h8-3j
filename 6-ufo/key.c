@@ -67,20 +67,25 @@ void key_sense(void)
   /* 　・PA0〜PA3だけを書き換えるように注意すること(他のビットの変化禁止) */
   /* 　・P60〜P62だけを読むように注意すること(他のビットは0にする) */
     //key 1,2,3
-    //PADR = 0x07; // PA3 = L
-	//keybuf[keybufdp][0] = ~(~P6DR & 0x07);   // データ入力
+	PADR &= 0xf0;
+	PADR |= 0x07;
+	keybuf[keybufdp][0] = P6DR;   // データ入力
       
+
     //key 4,5,6
-    //PADR = 0x0b;
-	//keybuf[keybufdp][1] = ~(~P6DR & 0x07);   // データ入力
+	PADR &= 0xf0;
+	PADR |= 0x0b;
+	keybuf[keybufdp][1] = P6DR;   // データ入力
       
     //key 7,8,9
-    //PADR = 0x0d;
-	//keybuf[keybufdp][2] = ~(~P6DR & 0x07);   // データ入力
+	PADR &= 0xf0;
+	PADR |= 0x0d;
+	keybuf[keybufdp][2] = P6DR;   // データ入力
       
     //key *,0,#
-    PADR = 0x0e;
-	keybuf[keybufdp][3] = ~(~P6DR & 0x07);   // データ入力
+	PADR &= 0xf0;
+	PADR |= 0x0e;
+	keybuf[keybufdp][3] = P6DR;   // データ入力
 }
 
 int key_check(int keynum)

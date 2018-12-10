@@ -78,10 +78,14 @@ int main(void)
     if (key_check(10) == KEYON){     /* *キー:ハイスコア表示 */
       lcd_cursor(0,0);                   /* LCD にハイスコア表示 */
       lcd_printstr(" High Score is  ");
-      lcd_cursor(0,1);
-      lcd_printstr("                ");
+      //lcd_cursor(0,1);
+      //lcd_printstr("                ");
       lcd_cursor(0,1);
       lcd_printstr(ntos(high_score,score_s));
+	  //high_tmp = high_score;
+	  //for( i = 0;high_tmp != 0;i++) high_tmp /= 10;
+	  //for(j = 0; j < 16 - i;j++) lcd_printch(' ');
+
     }
     if (key_check(10) == KEYOFF){     /* *キーを離したらメニュー表示 */
       lcd_cursor(0,0);                     /* LCD にメッセージ表示 */
@@ -96,19 +100,21 @@ int main(void)
       lcd_cursor(0,1);                   /* 得点表示欄のクリア */
       lcd_printstr("                ");
       if (score > high_score){           /* ハイスコアのとき */
-	high_score = score;                /* ハイスコア登録 */
-	lcd_cursor(0,0);                   /* ハイスコア表示 */
-	lcd_printstr(" High Score !!! ");
-	lcd_cursor(0,1);
-	lcd_printstr(ntos(high_score,score_s));
+		high_score = score;                /* ハイスコア登録 */
+		lcd_cursor(0,0);                   /* ハイスコア表示 */
+		lcd_printstr(" High Score !!! ");
+		lcd_cursor(0,1);
+		lcd_printstr(ntos(high_score,score_s));
       } else {                           /* ハイスコアでないとき*/
-	lcd_cursor(0,0);                   /* スコアを表示 */
-	lcd_printstr(" Your Score ... ");
-	lcd_cursor(0,1);
-	lcd_printstr(ntos(score,score_s));
+		lcd_cursor(0,0);                   /* スコアを表示 */
+		lcd_printstr(" Your Score ... ");
+		lcd_cursor(0,1);
+		lcd_printstr(ntos(score,score_s));
       }
       n_time = 0;
+
       while (n_time < WAITFEWSEC);       /* 得点表示後にちょっと待つ */
+
       lcd_cursor(0,0);                     /* LCD にメッセージ表示 */
       lcd_printstr(" 0:Game Start   ");
       lcd_cursor(0,1);
