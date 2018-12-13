@@ -78,8 +78,8 @@ int main(void)
     if (key_check(10) == KEYON){     /* *キー:ハイスコア表示 */
       lcd_cursor(0,0);                   /* LCD にハイスコア表示 */
       lcd_printstr(" High Score is  ");
-      //lcd_cursor(0,1);
-      //lcd_printstr("                ");
+      lcd_cursor(0,1);
+      lcd_printstr("                ");
       lcd_cursor(0,1);
       lcd_printstr(ntos(high_score,score_s));
 	  //high_tmp = high_score;

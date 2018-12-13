@@ -70,7 +70,6 @@ void key_sense(void)
 	PADR &= 0xf0;
 	PADR |= 0x07;
 	keybuf[keybufdp][0] = P6DR;   // データ入力
-      
 
     //key 4,5,6
 	PADR &= 0xf0;
