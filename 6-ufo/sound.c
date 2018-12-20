@@ -26,21 +26,23 @@ void sound_beep(int hz,int msec,int vol)
      /* 引数は、hz:音高, msec:音長, vol:音量                        */
      /* timer0_count, play_cont, da_amp は割り込みハンドラで使用    */
 {
-  //  unsigned int int_time;
+    unsigned int int_time;
 
-  //  timer0_count = 0;      /* 割り込み回数用カウンタの初期化 */
+    timer0_count = 0;      /* 割り込み回数用カウンタの初期化 */
 
   /* ここで割り込み周期(単位は[μs])を求めて int_time に入れる */
   /* 割り込み周期は音高周期の半分 */
+	int_time = (1000/hz)/2;
 
   /* ここで指定音長となる割り込み回数を求めて play_count に入れる */
   /* 単位に注意して音長が割り込み何回分かを求める */
+	play_count = int_time
 
   /* ここで指定音量になるように da_amp にセットする */
   /* 割り込みハンドラに渡すために大域変数に入れる */
 
-  //  timer_set(0,int_time);  /* 音高用割り込み周期のセット */
-  //  timer_start(0);         /* タイマ0スタート */
+    timer_set(0,int_time);  /* 音高用割り込み周期のセット */
+    timer_start(0);         /* タイマ0スタート */
 }
 
 #pragma interrupt
@@ -59,6 +61,6 @@ void int_imia0(void)
   /* タイマストップしたら割り込みはかからなくなる */
 
   /* 再びタイマ割り込みを使用するために必要な操作      */
-  //  timer_intflag_reset(0);  /* タイマ0の割り込みフラグをクリア */
-  //  ENINT();                 /* CPUを割り込み許可状態に */
+    timer_intflag_reset(0);  /* タイマ0の割り込みフラグをクリア */
+    ENINT();                 /* CPUを割り込み許可状態に */
 }
