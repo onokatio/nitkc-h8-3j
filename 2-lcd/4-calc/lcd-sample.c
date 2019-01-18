@@ -1,6 +1,5 @@
 #include "h8-3052-iodef.h"
 #include "lcd.h"
-#include <stdio.h>
 
 #define WIDTH 16
 #define HEIGHT 2
@@ -61,7 +60,14 @@ int main(void)
 		case DIV: a /= b; break;
 	}
 
-	sprintf(str,"%d",a);
+	//sprintf(str,"%d",a);
+	for(i=0;a != 0;i++){
+		str2[i] = a%10;
+		a = a/10;
+	}
+	for(;i>0;i--){
+		str[i]=str[]
+	}
 	for(i=0; str[i] != '\0' ; i++);
 	k = i % 3;
 	for(j=0,i=0; str[i] != '\0' ; i++,j++){
@@ -73,7 +79,7 @@ int main(void)
 	}
 	str2[j] = '\0';
 	if(str2[0] == ','){
-		(&str)++;
+		//(&str) = (&str) + 1;
 	}
 	print(0,0,str2);
 
