@@ -21,7 +21,7 @@ void sound_init(void)
   speaker_switch(SPEAKER); /* スピーカとして使用 */
 }
 
-void sound_beep(int hz,int msec,int vol)
+void sound_beep(int hz,int msec,int vol) // 250,200,32
      /* タイマ0の割り込みを使って単音を一定の長さだけ鳴らすための関数  */
      /* 引数は、hz:音高, msec:音長, vol:音量                        */
      /* timer0_count, play_cont, da_amp は割り込みハンドラで使用    */
@@ -32,14 +32,15 @@ void sound_beep(int hz,int msec,int vol)
 
   /* ここで割り込み周期(単位は[μs])を求めて int_time に入れる */
   /* 割り込み周期は音高周期の半分 */
-	int_time = (1000/hz)/2;
+	int_time = ((1000*1000)/hz); // 2000us
 
   /* ここで指定音長となる割り込み回数を求めて play_count に入れる */
   /* 単位に注意して音長が割り込み何回分かを求める */
-	play_count = int_time
+	play_count = (msec*1000)/int_time; //100
 
   /* ここで指定音量になるように da_amp にセットする */
   /* 割り込みハンドラに渡すために大域変数に入れる */
+	da_amp = vol;
 
     timer_set(0,int_time);  /* 音高用割り込み周期のセット */
     timer_start(0);         /* タイマ0スタート */
@@ -54,11 +55,18 @@ void int_imia0(void)
      /*   da_amp はD/Aの出力上限値  */
 {
   /* ここで、割り込み回数をインクリメントする */
+	timer0_count++;
 
   /* ここで、割り込みがかかる度にD/Aの出力を上限値か下限値に切替える */
+	if(timer0_count%2){
+		da_out(0,da_amp);
+	}else{
+		da_out(0,0);
+	}
 
   /* ここで、タイマカウントが音長カウントに達したらタイマストップする */
   /* タイマストップしたら割り込みはかからなくなる */
+	if(timer0_count > play_count) timer_stop(0);
 
   /* 再びタイマ割り込みを使用するために必要な操作      */
     timer_intflag_reset(0);  /* タイマ0の割り込みフラグをクリア */
