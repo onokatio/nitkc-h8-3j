@@ -40,6 +40,18 @@ void print(int startx,int starty, char str[]){
 
 }
 
+int number_to_string(int number,char string[]){
+	int index;
+	if( number == 0 ){
+		return 0;
+	}else{
+		index = number_to_string(number/10,string);
+		string[index] = '0' + number % 10;
+		return index+1;
+	}
+}
+
+
 int main(void)
 {
   lcd_init();
@@ -49,9 +61,9 @@ int main(void)
 	char str[20];
 	char str2[20];
 	int i,j,k;
-	int a = 10000000;
-	int b = 20;
-	enum Calc calc0 = MUL;
+	int a = 1000;
+	int b = 1000;
+	enum Calc calc0 = DIV;
 
 	switch(calc0){
 		case ADD: a += b; break;
@@ -60,27 +72,22 @@ int main(void)
 		case DIV: a /= b; break;
 	}
 
-	//sprintf(str,"%d",a);
-	for(i=0;a != 0;i++){
-		str2[i] = a%10;
-		a = a/10;
+	if(a == 0){
+	    print(0,0,"0");
+	}else{
+	    str[number_to_string(a,str)] = '\0';
 	}
-	for(;i>0;i--){
-		str[i]=str[]
-	}
+
 	for(i=0; str[i] != '\0' ; i++);
 	k = i % 3;
 	for(j=0,i=0; str[i] != '\0' ; i++,j++){
-		if( (i+3-k)%3 == 0 ){
+		if( (i+3-k)%3 == 0 && j!=0){
 			str2[j] = ',';
 			j++;
 		}
 		str2[j] = str[i];
 	}
 	str2[j] = '\0';
-	if(str2[0] == ','){
-		//(&str) = (&str) + 1;
-	}
 	print(0,0,str2);
 
   return 0;

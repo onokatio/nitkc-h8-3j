@@ -73,7 +73,7 @@ int main(void)
 {
   lcd_init();
 
-	scroll(1,5,0,"abcdefghijklmnopqrstuvwxyz");
+	scroll(1,5,1,"abcdefghijklmnopqrstuvwxyz");
 
   return 0;
 }

@@ -156,7 +156,8 @@ void int_imia0(void)
     /* ここに再生のときの処理を記述する(以下のコメントを参照のこと) */
                                /* D/Aにデータを出力         */
       //if(bufptr % PWM_T < pwm_databuf[pwm_bufptr]){
-      if(bufptr % PWM_T < 51){
+      //if(bufptr % PWM_T < 51){
+      if(bufptr % PWM_T >= 51){
 		  da_out(0,databuf[bufptr]);
 		  P9DR &= ~0x20;
 	  }else{
